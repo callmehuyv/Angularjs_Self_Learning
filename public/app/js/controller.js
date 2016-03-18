@@ -139,7 +139,9 @@ appController
 		}
 
 	}])
-	.controller('LoginController', function($scope, $auth, $rootScope, $location){
+	.controller('LoginController', 'LoginController');
+
+	function LoginController($scope, $auth, $rootScope, $location){
 		$rootScope.title = 'Login';
 		$rootScope.classBody = 'login';
 
@@ -158,7 +160,9 @@ appController
             	}
             );
         }
-	})
+	};
+
+
 	.controller('LogoutController', function($scope, $rootScope, userService, $cookieStore, $location){
 		$cookieStore.remove('token');
 		$location.path('/login');

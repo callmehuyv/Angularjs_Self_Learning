@@ -20,7 +20,7 @@ module.exports = function(config) {
         'bower_components/angular-ui-router/release/angular-ui-router.min.js',
         'bower_components/satellizer/satellizer.min.js',
         'bower_components/angular/angular.min.js',
-        'bower_components/angular/angular.min.js',
+        'bower_components/toastr/toastr.min.js',
         'js/*.js',
         'test/*.js',
     ],
