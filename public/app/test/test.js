@@ -1,14 +1,12 @@
-// This is example a short test case
-describe('Just indivial tast case', function() {
-  it('User array should equal to target', function() {
-    var users = ['jack', 'igor', 'jeff'];
-    expect(users).toEqual(['jack', 'igor', 'jeff']);
-  });
-});
+it('should get login success',
+  inject(['$auth', '$httpBackend', function($auth, $httpBackend){
+    $httpBackend.expect('POST', 'https://api.mydomain.com/login')
+      .respond(200, "[{ success : 'true', id : 123 }]");
 
-describe('Test LoginController', function() {
-  it('User array should equal to target', function() {
-    var users = ['jack', 'igor', 'jeff'];
-    expect(users).toEqual(['jack', 'igor', 'jeff']);
-  });
-});
+    $auth.login('admin@admin.com', 'admin')
+      .then(function(data) {
+        expect(true).toBeTruthy();
+    });
+
+  $httpBackend.flush();
+}]));

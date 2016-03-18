@@ -7,7 +7,8 @@ var app = angular.module('app', [
 	'ui.router',
 	'ngCookies',
 	'satellizer',
-	'ui.bootstrap'
+	'ui.bootstrap',
+	'ngMock',
 ]);
 
 // Register main controller

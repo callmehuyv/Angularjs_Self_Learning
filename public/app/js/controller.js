@@ -139,31 +139,38 @@ appController
 		}
 
 	}])
-	.controller('LoginController', 'LoginController');
-
-	function LoginController($scope, $auth, $rootScope, $location){
-		$rootScope.title = 'Login';
-		$rootScope.classBody = 'login';
-
-        $scope.login = function() {
-            var credentials = {
-                email: $scope.email,
-                password: $scope.password
-            }
-            $auth.login(credentials).then(
-            	function() {
-	                $location.path('/');
-	                toastr.success('Login success!');
-            	},
-            	function() {
-            		toastr.warning('Email or password not correct!');
-            	}
-            );
-        }
-	};
-
+	.controller('LoginController', LoginController)
+	.controller('TestCtrl', function TestCtrl() {
+		return 'hello';
+	})
 
 	.controller('LogoutController', function($scope, $rootScope, userService, $cookieStore, $location){
 		$cookieStore.remove('token');
 		$location.path('/login');
 	});
+
+LoginController.$inject = ['$scope', '$auth', '$rootScope', '$location'];
+function LoginController($scope, $auth, $rootScope, $location) {
+	$rootScope.title = 'Login';
+	$rootScope.classBody = 'login';
+
+    $scope.login = function() {
+        var credentials = {
+            email: $scope.email,
+            password: $scope.password
+        }
+        $auth.login(credentials).then(
+        	function() {
+                $location.path('/');
+                toastr.success('Login success!');
+        	},
+        	function() {
+        		toastr.warning('Email or password not correct!');
+        	}
+        );
+    }
+};
+
+function TestCtrl() {
+	return 'Hello';
+}
