@@ -7,8 +7,7 @@ var app = angular.module('app', [
 	'ui.router',
 	'ngCookies',
 	'satellizer',
-	'ui.bootstrap',
-	'ngMock',
+	'ui.bootstrap'
 ]);
 
 // Register main controller
@@ -18,7 +17,13 @@ var appController = angular.module('appController', []);
 var appService = angular.module('appService', []);
 
 app
-	.config(['$stateProvider', '$urlRouterProvider', '$authProvider', function($stateProvider, $urlRouterProvider, $authProvider) {
+	.config(['$stateProvider', '$urlRouterProvider', '$authProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $authProvider, $locationProvider) {
+
+		$locationProvider.html5Mode({
+			enabled : true,
+			requireBase : true
+		});
+
 		$authProvider.loginUrl = 'http://angular.lempserver.com/api/user/auth';
 	    $urlRouterProvider.otherwise('/');
 	    $stateProvider
@@ -80,9 +85,7 @@ app
 
 app
 	.run(function($rootScope, $location, $http, $auth, $state) {
-		console.log('Bạn đã thay đổi routes, kiểm tra đã đăng nhập: '+$auth.isAuthenticated());
 		$rootScope.$on('$stateChangeStart', function () {
-			console.log('Bạn đã thay đổi routes, kiểm tra đã đăng nhập: '+$auth.isAuthenticated());
 		    if ($location.path() != '/login' && !$auth.isAuthenticated()) {
 		    	$location.path('/login');
 		    }

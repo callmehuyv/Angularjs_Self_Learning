@@ -8,6 +8,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
 
 class Handler extends ExceptionHandler
 {
@@ -43,8 +44,23 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $e
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $e)
-    {
-        return parent::render($request, $e);
+    public function render($request, Exception $e){
+        if($this->isHttpException($e)){
+            switch ($e->getStatusCode()) {
+            case 404:
+
+                $path = explode('http://angular.lempserver.com/app/', $request->url())[1];
+                return redirect('http://angular.lempserver.com/app/#/'.$path);
+                // return die($path);
+                break;
+
+            default:
+                return $this->renderHttpException($e);
+                break;
+            }
+        } else {
+            return parent::render($request, $e);
+        }
+
     }
 }
